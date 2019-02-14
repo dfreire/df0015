@@ -21,7 +21,7 @@
         },
         {
           "type": "list",
-          "atomsType": "pdf-list",
+          "atomsType": "t1",
           "key": "pdfs",
           "label": "PDFs"
         }
@@ -45,15 +45,30 @@
     }
   },
   "cards": {
-    "1": {
+    "c0": {
       "id": "c0",
       "templateId": "t0",
       "values": {
-        "pt": {
-          "title": "Vinhos Soalheiro",
-          "description": "Estes são os vinhos Soalheiro",
-          "image": "espectacular.jpg"
-        }
+        "title": "Vinhos Soalheiro",
+        "description": "Estes são os vinhos Soalheiro",
+        "image": "espectacular.jpg",
+        "pdfs": ["c1", "c2"]
+      }
+    },
+    "c1": {
+      "id": "c1",
+      "templateId": "t1",
+      "values": {
+        "name": "PDF-1",
+        "file": "file-1.pdf"
+      }
+    },
+    "c2": {
+      "id": "c2",
+      "templateId": "t1",
+      "values": {
+        "name": "PDF-2",
+        "file": "file-2.pdf"
       }
     }
   }

@@ -1,6 +1,8 @@
 // @flow
 
-type AtomType = 'text' | 'file' | 'card';
+type TemplateId = string;
+
+type AtomType = 'text' | 'file' | TemplateId;
 // | 'textarea'
 // | 'number'
 // | 'date'
@@ -10,33 +12,24 @@ type AtomType = 'text' | 'file' | 'card';
 
 type ListType = 'list';
 
-type TemplateId = string;
-
 export type Field = {
-  type: AtomType | ListType | TemplateId,
+  type: AtomType | ListType,
+  atomsType?: AtomType,
   key: string,
   label: string,
-};
-
-type ListField = Field & {
-  type: ListType,
-  atomsType: AtomType | TemplateId,
 };
 
 export type Template = {
   id: TemplateId,
   name: string,
   fields: Array<Field>,
+  captionKey: string,
 };
-
-type Lang = 'pt' | 'en' | 'de' | 'ja';
 
 export type Card = {
   id: string,
   templateId: TemplateId,
   values: {
-    [lang: Lang]: {
-      [fieldKey: string]: any,
-    },
+    [fieldKey: string]: any,
   },
 };
