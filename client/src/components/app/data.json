@@ -44,7 +44,11 @@
       "id": "1",
       "templateId": "news-item",
       "title": "Vinhos Soalheiro",
-      "values": {}
+      "values": {
+        "pt": {
+          "description": "Estes são os vinhos Soalheiro"
+        }
+      }
     }
   }
 }

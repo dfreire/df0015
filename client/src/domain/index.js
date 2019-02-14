@@ -1,20 +1,19 @@
 // @flow
 
-type TemplateId = string;
-
-type AtomType = 'text' | 'card';
+type AtomType = 'text' | 'file' | 'card';
 // | 'textarea'
 // | 'number'
 // | 'date'
 // | 'link'
-// | 'file'
 // | 'tags'
 // | 'select'; // instead of radios/checkboxes
 
 type ListType = 'list';
 
-type Field = {
-  type: AtomType | ListType,
+type TemplateId = string;
+
+export type Field = {
+  type: AtomType | ListType | TemplateId,
   key: string,
   label: string,
 };
@@ -24,17 +23,17 @@ type ListField = Field & {
   atomsType: AtomType | TemplateId,
 };
 
-type Template = {
-  id: string,
+export type Template = {
+  id: TemplateId,
   name: string,
   fields: Array<Field>,
 };
 
 type Lang = 'pt' | 'en' | 'de' | 'ja';
 
-type Card = {
+export type Card = {
   id: string,
-  templateId: string,
+  templateId: TemplateId,
   title: string,
   values: { [lang: Lang]: { [fieldKey: string]: any } },
 };
