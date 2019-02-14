@@ -15,8 +15,14 @@ const TextField = (props: { field: Field, value: any }) => (
   </Form.Item>
 );
 
-const FileField = (props: { field: Field }) => <p key={props.field.key}>{props.field.label}</p>;
+const FileField = (props: { field: Field, value: any }) => (
+  <Form.Item key={props.field.key} label={props.field.label}>
+    <a href="#">{props.value}</a>
+  </Form.Item>
+);
+
 const CardField = (props: { field: Field }) => <p key={props.field.key}>{props.field.label}</p>;
+
 const ListField = (props: { field: Field }) => <p key={props.field.key}>{props.field.label}</p>;
 
 const App = () => (
@@ -30,7 +36,7 @@ const App = () => (
           case 'text':
             return <TextField key={field.key} field={field} value={value} />;
           case 'file':
-            return <FileField key={field.key} field={field} />;
+            return <FileField key={field.key} field={field} value={value} />;
           case 'card':
             return <CardField key={field.key} field={field} />;
           case 'list':

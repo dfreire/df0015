@@ -34,6 +34,9 @@ type Lang = 'pt' | 'en' | 'de' | 'ja';
 export type Card = {
   id: string,
   templateId: TemplateId,
-  title: string,
-  values: { [lang: Lang]: { [fieldKey: string]: any } },
+  values: {
+    [lang: Lang]: {
+      [fieldKey: string]: any,
+    },
+  },
 };
