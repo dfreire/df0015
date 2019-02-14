@@ -1,0 +1,50 @@
+{
+  "templates": {
+    "pdf-list": {
+      "id": "pdf-list",
+      "name": "PDFs",
+      "fields": [
+        {
+          "type": "text",
+          "key": "name",
+          "label": "Nome"
+        },
+        {
+          "type": "file",
+          "key": "file",
+          "label": "Ficheiro"
+        }
+      ]
+    },
+    "news-item": {
+      "id": "news-item",
+      "name": "News Item",
+      "fields": [
+        {
+          "type": "text",
+          "key": "description",
+          "label": "Descrição"
+        },
+        {
+          "type": "file",
+          "key": "image",
+          "label": "Imagem"
+        },
+        {
+          "type": "list",
+          "atomsType": "pdf-list",
+          "key": "pdfs",
+          "label": "PDFs"
+        }
+      ]
+    }
+  },
+  "cards": {
+    "1": {
+      "id": "1",
+      "templateId": "news-item",
+      "title": "Vinhos Soalheiro",
+      "values": {}
+    }
+  }
+}

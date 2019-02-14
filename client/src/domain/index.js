@@ -1,5 +1,7 @@
 // @flow
 
+type TemplateId = string;
+
 type AtomType = 'text' | 'card';
 // | 'textarea'
 // | 'number'
@@ -19,7 +21,7 @@ type Field = {
 
 type ListField = Field & {
   type: ListType,
-  atomsType: AtomType,
+  atomsType: AtomType | TemplateId,
 };
 
 type Template = {
@@ -28,9 +30,11 @@ type Template = {
   fields: Array<Field>,
 };
 
+type Lang = 'pt' | 'en' | 'de' | 'ja';
+
 type Card = {
   id: string,
   templateId: string,
   title: string,
-  values: { [fieldKey: string]: any },
+  values: { [lang: Lang]: { [fieldKey: string]: any } },
 };
