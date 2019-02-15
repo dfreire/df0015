@@ -2,7 +2,7 @@
 
 type TemplateId = string;
 
-type AtomType = 'text' | 'file' | TemplateId;
+type FieldType = 'text' | 'file' | TemplateId;
 // | 'textarea'
 // | 'number'
 // | 'date'
@@ -10,20 +10,18 @@ type AtomType = 'text' | 'file' | TemplateId;
 // | 'tags'
 // | 'select'; // instead of radios/checkboxes
 
-type ListType = 'list';
-
 export type Field = {
-  type: AtomType | ListType,
-  atomsType?: AtomType,
+  type: FieldType | 'list',
   key: string,
   label: string,
+  listItemType?: FieldType,
+  listItemCaptionKey?: string,
 };
 
 export type Template = {
   id: TemplateId,
   name: string,
   fields: Array<Field>,
-  captionKey: string,
 };
 
 export type Card = {

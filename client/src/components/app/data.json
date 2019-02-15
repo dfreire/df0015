@@ -21,9 +21,24 @@
         },
         {
           "type": "list",
-          "atomsType": "t1",
           "key": "pdfs",
-          "label": "PDFs"
+          "label": "PDFs",
+          "listItemType": "t1",
+          "listItemCaptionKey": "name"
+        },
+        {
+          "type": "list",
+          "key": "tlist",
+          "label": "list of texts",
+          "listItemType": "text",
+          "listItemCaptionKey": "name"
+        },
+        {
+          "type": "list",
+          "key": "flist",
+          "label": "list of files",
+          "listItemType": "file",
+          "listItemCaptionKey": "name"
         }
       ]
     },
@@ -52,7 +67,9 @@
         "title": "Vinhos Soalheiro",
         "description": "Estes são os vinhos Soalheiro",
         "image": "espectacular.jpg",
-        "pdfs": ["c1", "c2"]
+        "pdfs": ["c1", "c2"],
+        "tlist": ["text-1", "text-2"],
+        "flist": ["file-1.pdf", "file-2.pdf"]
       }
     },
     "c1": {
