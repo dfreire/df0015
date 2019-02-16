@@ -1,91 +1,111 @@
 {
   "templates": {
-    "t0": {
-      "id": "t0",
+    "news-item": {
+      "id": "news-item",
       "name": "News Item",
       "fields": [
         {
+          "label": "Título",
           "type": "text",
-          "key": "title",
-          "label": "Título"
+          "key": "title"
         },
         {
-          "type": "text",
-          "key": "description",
-          "label": "Descrição"
-        },
-        {
+          "label": "Imagem",
           "type": "file",
-          "key": "image",
-          "label": "Imagem"
+          "key": "image"
         },
         {
-          "type": "list",
-          "key": "pdfs",
           "label": "PDFs",
-          "listItemType": "t1",
-          "listItemCaptionKey": "name"
+          "type": "card",
+          "key": "pdfs",
+          "isList": true,
+          "cardTemplateId": "pdf",
+          "cardFieldKey": "name"
         },
         {
-          "type": "list",
-          "key": "tlist",
-          "label": "list of texts",
-          "listItemType": "text",
-          "listItemCaptionKey": "name"
-        },
-        {
-          "type": "list",
-          "key": "flist",
-          "label": "list of files",
-          "listItemType": "file",
-          "listItemCaptionKey": "name"
+          "label": "WINEs",
+          "type": "card",
+          "key": "wines",
+          "isList": true,
+          "cardTemplateId": "wine",
+          "cardFieldKey": "name"
         }
       ]
     },
-    "t1": {
-      "id": "t1",
-      "name": "PDFs",
+    "pdf": {
+      "id": "pdf",
+      "name": "PDF",
       "fields": [
         {
+          "label": "Nome",
           "type": "text",
-          "key": "name",
-          "label": "Nome"
+          "key": "name"
         },
         {
+          "label": "PDF",
           "type": "file",
-          "key": "file",
-          "label": "Ficheiro"
+          "key": "pdf"
+        }
+      ]
+    },
+    "wine": {
+      "id": "wine",
+      "name": "wine",
+      "fields": [
+        {
+          "label": "Nome",
+          "type": "text",
+          "key": "name"
+        },
+        {
+          "label": "Foto",
+          "type": "file",
+          "key": "photo"
         }
       ]
     }
   },
   "cards": {
-    "c0": {
-      "id": "c0",
-      "templateId": "t0",
+    "c-news-item-1": {
+      "id": "c-news-item-1",
+      "templateId": "news-item",
       "values": {
         "title": "Vinhos Soalheiro",
-        "description": "Estes são os vinhos Soalheiro",
-        "image": "espectacular.jpg",
-        "pdfs": ["c1", "c2"],
-        "tlist": ["text-1", "text-2"],
-        "flist": ["file-1.pdf", "file-2.pdf"]
+        "image": "image.jpg",
+        "pdfs": ["c-pdf-1", "c-pdf-2"],
+        "wines": ["c-wine-1", "c-wine-2"]
       }
     },
-    "c1": {
-      "id": "c1",
-      "templateId": "t1",
+    "c-pdf-1": {
+      "id": "c-pdf-1",
+      "templateId": "pdf",
       "values": {
         "name": "PDF-1",
-        "file": "file-1.pdf"
+        "pdf": "file1.pdf"
       }
     },
-    "c2": {
-      "id": "c2",
-      "templateId": "t1",
+    "c-pdf-2": {
+      "id": "c-pdf-2",
+      "templateId": "pdf",
       "values": {
         "name": "PDF-2",
-        "file": "file-2.pdf"
+        "pdf": "file2.pdf"
+      }
+    },
+    "c-wine-1": {
+      "id": "c-wine-1",
+      "templateId": "wine",
+      "values": {
+        "name": "WINE-1",
+        "photo": "photo1.pdf"
+      }
+    },
+    "c-wine-2": {
+      "id": "c-wine-2",
+      "templateId": "wine",
+      "values": {
+        "name": "WINE-2",
+        "photo": "photo2.pdf"
       }
     }
   }

@@ -1,21 +1,16 @@
 // @flow
 
+type FieldType = 'text' | 'file' | 'card';
+
 type TemplateId = string;
 
-type FieldType = 'text' | 'file' | TemplateId;
-// | 'textarea'
-// | 'number'
-// | 'date'
-// | 'link'
-// | 'tags'
-// | 'select'; // instead of radios/checkboxes
-
 export type Field = {
-  type: FieldType | 'list',
-  key: string,
   label: string,
-  listItemType?: FieldType,
-  listItemCaptionKey?: string,
+  type: FieldType,
+  key: string,
+  isList?: boolean,
+  cardTemplateId?: string,
+  cardFieldKey?: string,
 };
 
 export type Template = {
@@ -27,7 +22,5 @@ export type Template = {
 export type Card = {
   id: string,
   templateId: TemplateId,
-  values: {
-    [fieldKey: string]: any,
-  },
+  values: { [key: string]: any },
 };
