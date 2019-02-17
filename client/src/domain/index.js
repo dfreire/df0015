@@ -9,8 +9,12 @@ export type Field = {
   type: FieldType,
   key: string,
   isList?: boolean,
-  cardTemplateId?: string,
-  cardFieldKey?: string,
+  card?: {
+    templateId: string,
+    displayKey: string,
+    canCreate?: boolean,
+    canSelect?: boolean,
+  },
 };
 
 export type Template = {

@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import { get } from 'lodash';
 import { Formik, Field as FormikField, FieldArray as FormikFieldArray } from 'formik';
 import { Form as AntdForm, Input as AntdInput } from 'antd';
 
@@ -17,11 +18,12 @@ const FileField = (props: { templateField: Field, formikField: any }) => {
 
 const CardField = (props: { templateField: Field, formikField: any }) => {
   const card = cards[props.formikField.value];
-  return <a href={`${card.id}`}>{card.values[props.templateField.cardFieldKey]}</a>;
+  const displayKey = get(props, 'templateField.card.displayKey', 'id');
+  const displayValue = get(card.values, displayKey, card.id);
+  return <a href={`${card.id}`}>{displayValue}</a>;
 };
 
 const renderField = (props: { templateField: Field, formikField: any }) => {
-  // console.log('renderField', props.templateField, props.formikField);
   switch (props.templateField.type) {
     case 'text':
       return <TextField {...props} />;

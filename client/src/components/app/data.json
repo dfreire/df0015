@@ -19,16 +19,22 @@
           "type": "card",
           "key": "pdfs",
           "isList": true,
-          "cardTemplateId": "pdf",
-          "cardFieldKey": "name"
+          "card": {
+            "templateId": "pdf",
+            "displayKey": "name",
+            "canCreate": true
+          }
         },
         {
           "label": "WINEs",
           "type": "card",
           "key": "wines",
           "isList": true,
-          "cardTemplateId": "wine",
-          "cardFieldKey": "name"
+          "card": {
+            "templateId": "wine",
+            "displayKey": "name",
+            "canSelect": true
+          }
         }
       ]
     },
