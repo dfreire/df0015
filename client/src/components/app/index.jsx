@@ -117,51 +117,65 @@ type Props = {
 type State = {
   card?: Card,
   template?: Template,
+  fetchId?: string,
+  loading: boolean,
+  notFound: boolean,
 };
 
-class Page extends React.Component<Props, State> {
+class Page extends React.PureComponent<Props, State> {
   state: State = {
     card: undefined,
     template: undefined,
+    fetchId: undefined,
+    loading: false,
+    notFound: false,
   };
 
   componentDidMount() {
-    const id = get(this.props, 'match.params.id', 'index');
-    this.fetch(id);
+    this.update();
   }
 
   componentDidUpdate() {
-    const { card } = this.state;
-    const id = get(this.props, 'match.params.id', 'index');
-
-    if (card != null && card.id !== id) {
-      this.fetch(id);
-    }
+    this.update();
   }
 
-  fetch = (id: string) => {
-    this.setState({ card: undefined, template: undefined });
+  update = () => {
+    const id = get(this.props, 'match.params.id', 'index');
+    const { fetchId } = this.state;
 
-    setTimeout(() => {
-      const card: Card = cards[id];
-      const template: Template = templates[card.templateId];
-      console.log(card);
-      this.setState({ card, template });
-    }, 1000);
+    if (id !== fetchId) {
+      console.log('fetch', id);
+      this.setState({
+        card: undefined,
+        template: undefined,
+        fetchId: id,
+        loading: true,
+        notFound: false,
+      });
+
+      setTimeout(() => {
+        const card: Card = cards[id];
+        if (card != null) {
+          const template: Template = templates[card.templateId];
+          if (template != null) {
+            this.setState({ loading: false, card, template });
+            return;
+          }
+        }
+        this.setState({ loading: false, notFound: true });
+      }, 1000);
+    }
   };
 
   render() {
-    const { card, template } = this.state;
+    const { card, template, loading, notFound } = this.state;
 
     return (
       <div>
-        <Link to="/">TOP</Link>
-
-        {card != null && template != null ? (
-          <Form card={card} template={template} />
-        ) : (
-          <p>Loading...</p>
-        )}
+        <Link to="/">TOP</Link> | <Link to="/xpto">xpto</Link>
+        {notFound && <p>Not Found</p>}
+        {loading && <p>Loading...</p>}
+        {card != null && template != null && <Form card={card} template={template} />}
       </div>
     );
   }
