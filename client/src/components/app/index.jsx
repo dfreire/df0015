@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Formik, FieldArray as FormikFieldArray, Field as FormikField } from 'formik';
 import { Form as AntdForm, Input, Button } from 'antd';
 import { get } from 'lodash';
@@ -115,20 +115,18 @@ type Props = {
 };
 
 type State = {
-  card?: Card,
-  template?: Template,
   fetchId?: string,
   loading: boolean,
-  notFound: boolean,
+  card?: Card,
+  template?: Template,
 };
 
 class Page extends React.PureComponent<Props, State> {
   state: State = {
-    card: undefined,
-    template: undefined,
     fetchId: undefined,
     loading: false,
-    notFound: false,
+    card: undefined,
+    template: undefined,
   };
 
   componentDidMount() {
@@ -144,13 +142,13 @@ class Page extends React.PureComponent<Props, State> {
     const { fetchId } = this.state;
 
     if (id !== fetchId) {
+      console.log('---');
       console.log('fetch', id);
       this.setState({
-        card: undefined,
-        template: undefined,
         fetchId: id,
         loading: true,
-        notFound: false,
+        card: undefined,
+        template: undefined,
       });
 
       setTimeout(() => {
@@ -162,20 +160,20 @@ class Page extends React.PureComponent<Props, State> {
             return;
           }
         }
-        this.setState({ loading: false, notFound: true });
+        this.setState({ loading: false });
       }, 1000);
     }
   };
 
   render() {
-    const { card, template, loading, notFound } = this.state;
+    const { loading, card, template } = this.state;
 
     return (
       <div>
         <Link to="/">TOP</Link> | <Link to="/xpto">xpto</Link>
-        {notFound && <p>Not Found</p>}
         {loading && <p>Loading...</p>}
-        {card != null && template != null && <Form card={card} template={template} />}
+        {!loading && (card == null || template == null) && <p>Not Found</p>}
+        {!loading && card != null && template != null && <Form card={card} template={template} />}
       </div>
     );
   }
