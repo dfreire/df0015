@@ -1,8 +1,9 @@
 // @flow
 import React from 'react';
-import { get } from 'lodash';
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 import { Formik, FieldArray as FormikFieldArray, Field as FormikField } from 'formik';
 import { Form as AntdForm, Input, Button } from 'antd';
+import { get } from 'lodash';
 
 import type { Card, Template, Field } from '../../domain';
 
@@ -13,14 +14,14 @@ const TextField = (props: { templateField: Field, formikField: any }) => {
 };
 
 const FileField = (props: { templateField: Field, formikField: any }) => {
-  return <a href={`${props.formikField.value}`}>{props.formikField.value}</a>;
+  return <Link to={`/${props.formikField.value}`}>{props.formikField.value}</Link>;
 };
 
 const CardField = (props: { templateField: Field, formikField: any }) => {
   const card = cards[props.formikField.value];
   const displayKey = get(props, 'templateField.card.displayKey', 'id');
   const displayValue = get(card.values, displayKey, card.id);
-  return <a href={`${card.id}`}>{displayValue}</a>;
+  return <Link to={`/${card.id}`}>{displayValue}</Link>;
 };
 
 const renderField = (props: { templateField: Field, formikField: any }) => {
@@ -36,10 +37,8 @@ const renderField = (props: { templateField: Field, formikField: any }) => {
   }
 };
 
-const App = () => {
-  const card: Card = cards['c-news-item-1'];
-  const template: Template = templates[card.templateId];
-
+const Form = (props: { card: Card, template: Template }) => {
+  const { card, template } = props;
   return (
     <div style={{ margin: 'auto', padding: 50, width: 600 }}>
       <Formik
@@ -106,5 +105,75 @@ const App = () => {
     </div>
   );
 };
+
+type Props = {
+  match: {
+    params: {
+      id: string,
+    },
+  },
+};
+
+type State = {
+  card?: Card,
+  template?: Template,
+};
+
+class Page extends React.Component<Props, State> {
+  state: State = {
+    card: undefined,
+    template: undefined,
+  };
+
+  componentDidMount() {
+    const id = get(this.props, 'match.params.id', 'index');
+    this.fetch(id);
+  }
+
+  componentDidUpdate() {
+    const { card } = this.state;
+    const id = get(this.props, 'match.params.id', 'index');
+
+    if (card != null && card.id !== id) {
+      this.fetch(id);
+    }
+  }
+
+  fetch = (id: string) => {
+    this.setState({ card: undefined, template: undefined });
+
+    setTimeout(() => {
+      const card: Card = cards[id];
+      const template: Template = templates[card.templateId];
+      console.log(card);
+      this.setState({ card, template });
+    }, 1000);
+  };
+
+  render() {
+    const { card, template } = this.state;
+
+    return (
+      <div>
+        <Link to="/">TOP</Link>
+
+        {card != null && template != null ? (
+          <Form card={card} template={template} />
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+    );
+  }
+}
+
+const App = () => (
+  <Router>
+    <Switch>
+      <Route path="/:id" component={Page} exact />
+      <Route component={Page} />
+    </Switch>
+  </Router>
+);
 
 export default App;

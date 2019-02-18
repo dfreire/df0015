@@ -72,8 +72,8 @@
     }
   },
   "cards": {
-    "c-news-item-1": {
-      "id": "c-news-item-1",
+    "index": {
+      "id": "index",
       "templateId": "news-item",
       "values": {
         "title": "Vinhos Soalheiro",
