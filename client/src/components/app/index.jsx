@@ -1,15 +1,15 @@
 // @flow
 import React from 'react';
 import { get } from 'lodash';
-import { Formik, Field as FormikField, FieldArray as FormikFieldArray } from 'formik';
-import { Form as AntdForm, Input as AntdInput } from 'antd';
+import { Formik, FieldArray as FormikFieldArray, Field as FormikField } from 'formik';
+import { Form as AntdForm, Input, Button } from 'antd';
 
 import type { Card, Template, Field } from '../../domain';
 
 const { cards, templates } = require('./data.json');
 
 const TextField = (props: { templateField: Field, formikField: any }) => {
-  return <AntdInput {...props.formikField} />;
+  return <Input {...props.formikField} />;
 };
 
 const FileField = (props: { templateField: Field, formikField: any }) => {
@@ -44,9 +44,19 @@ const App = () => {
     <div style={{ margin: 'auto', padding: 50, width: 600 }}>
       <Formik
         initialValues={card.values}
-        render={({ values }) => (
-          <AntdForm layout="vertical">
-            {console.log('Formik values', values)}
+        onSubmit={(values, formikBag) => {
+          console.log('onSubmit', { values, formikBag });
+        }}
+        onReset={(values, formikBag) => {
+          console.log('onReset', { values, formikBag });
+        }}
+        render={formikProps => (
+          <AntdForm
+            layout="vertical"
+            onSubmit={formikProps.handleSubmit}
+            onReset={formikProps.handleReset}
+          >
+            {console.log('Formik values', formikProps.values)}
             {template.fields.map(templateField => {
               if (templateField.isList) {
                 return (
@@ -55,7 +65,7 @@ const App = () => {
                       name={templateField.key}
                       render={arrayHelpers => (
                         <ul>
-                          {values[templateField.key].map((value, index) => (
+                          {formikProps.values[templateField.key].map((value, index) => (
                             <li key={`${templateField.key}.${index}`}>
                               <FormikField
                                 name={`${templateField.key}.${index}`}
@@ -80,6 +90,16 @@ const App = () => {
                 </AntdForm.Item>
               );
             })}
+            <AntdForm.Item>
+              <Button type="primary" htmlType="submit" disabled={false}>
+                Save
+              </Button>
+            </AntdForm.Item>
+            <AntdForm.Item>
+              <Button type="secondary" htmlType="reset" disabled={false}>
+                Cancel
+              </Button>
+            </AntdForm.Item>
           </AntdForm>
         )}
       />
