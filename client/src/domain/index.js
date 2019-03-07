@@ -1,30 +1,27 @@
 // @flow
 
-type FieldType = 'text' | 'file' | 'card';
-
-type TemplateId = string;
-
-export type Field = {
-  label: string,
-  type: FieldType,
-  key: string,
-  isList?: boolean,
-  card?: {
-    templateId: string,
-    displayKey: string,
-    canCreate?: boolean,
-    canSelect?: boolean,
-  },
-};
+export type FieldType = 'text' | 'file' | 'card';
 
 export type Template = {
-  id: TemplateId,
+  id: string,
   name: string,
-  fields: Array<Field>,
+  fields: Array<{
+    key: string,
+    type: FieldType,
+    label: string,
+    isList?: boolean,
+    card?: {
+      templateId: string,
+      canSelect?: boolean,
+      canCreate?: boolean,
+      canRemove?: boolean,
+    },
+  }>,
+  captionKey: string,
 };
 
 export type Card = {
   id: string,
-  templateId: TemplateId,
+  templateId: string,
   values: { [key: string]: any },
 };

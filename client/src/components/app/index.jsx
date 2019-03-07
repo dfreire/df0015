@@ -5,35 +5,37 @@ import { Formik, FieldArray as FormikFieldArray, Field as FormikField } from 'fo
 import { Form as AntdForm, Input, Button } from 'antd';
 import { get } from 'lodash';
 
-import type { Card, Template, Field } from '../../domain';
+import type { Card, Template, FieldType } from '../../domain';
 
 const { cards, templates } = require('./data.json');
 
-const TextField = (props: { templateField: Field, formikField: any }) => {
+const TextField = (props: { formikField: any }) => {
   return <Input {...props.formikField} />;
 };
 
-const FileField = (props: { templateField: Field, formikField: any }) => {
+const FileField = (props: { formikField: any }) => {
   return <Link to={`/${props.formikField.value}`}>{props.formikField.value}</Link>;
 };
 
-const CardField = (props: { templateField: Field, formikField: any }) => {
+const CardField = (props: { formikField: any }) => {
   const card = cards[props.formikField.value];
-  const displayKey = get(props, 'templateField.card.displayKey', 'id');
-  const displayValue = get(card.values, displayKey, card.id);
-  return <Link to={`/${card.id}`}>{displayValue}</Link>;
+  const template = templates[card.templateId];
+  const caption = get(card.values, template.captionKey, card.id);
+  return <Link to={`/${card.id}`}>{caption}</Link>;
 };
 
-const renderField = (props: { templateField: Field, formikField: any }) => {
-  switch (props.templateField.type) {
+const renderField = (props: { type: FieldType, formikField: any }) => {
+  const { type, formikField } = props;
+
+  switch (type) {
     case 'text':
-      return <TextField {...props} />;
+      return <TextField formikField={formikField} />;
     case 'file':
-      return <FileField {...props} />;
+      return <FileField formikField={formikField} />;
     case 'card':
-      return <CardField {...props} />;
+      return <CardField formikField={formikField} />;
     default:
-      return <TextField {...props} />;
+      return <TextField formikField={formikField} />;
   }
 };
 
@@ -69,7 +71,7 @@ const Form = (props: { card: Card, template: Template }) => {
                               <FormikField
                                 name={`${templateField.key}.${index}`}
                                 render={({ field: formikField }) =>
-                                  renderField({ templateField, formikField })
+                                  renderField({ type: templateField.type, formikField })
                                 }
                               />
                             </li>
@@ -84,7 +86,9 @@ const Form = (props: { card: Card, template: Template }) => {
                 <AntdForm.Item key={templateField.key} label={templateField.label}>
                   <FormikField
                     name={templateField.key}
-                    render={({ field: formikField }) => renderField({ templateField, formikField })}
+                    render={({ field: formikField }) =>
+                      renderField({ type: templateField.type, formikField })
+                    }
                   />
                 </AntdForm.Item>
               );
